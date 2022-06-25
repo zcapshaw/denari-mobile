@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/sign_up/sign_up.dart';
+import 'package:denari_mobile/login/login.dart';
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,27 +22,50 @@ class SignUpForm extends StatelessWidget {
             );
         }
       },
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Create an account to continue',
-              style: GoogleFonts.manrope(
-                textStyle: TextStyle(
-                    color: Colors.blueGrey[900],
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                  'assets/denari_icon.png',
+                  height: 120,
+                ),
+              const SizedBox(height: 50),
+              Text(
+                'Create an account to continue',
+                style: GoogleFonts.manrope(
+                  textStyle: TextStyle(
+                      color: Colors.blueGrey[900],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            _EmailInput(),
-            const SizedBox(height: 16),
-            _PasswordInput(),
-            const SizedBox(height: 24),
-            _SignUpButton(),
-          ],
+              const SizedBox(height: 32),
+              _EmailInput(),
+              const SizedBox(height: 16),
+              _PasswordInput(),
+              const SizedBox(height: 24),
+              _SignUpButton(),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Have an account?',
+                    style: GoogleFonts.manrope(
+                      textStyle: TextStyle(
+                        color: Colors.blueGrey[900],
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  _LoginButton(),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -91,8 +115,9 @@ class _PasswordInputState extends State<_PasswordInput> {
             labelText: 'Password (8+ characters)',
             errorText: state.password.invalid ? 'Invalid password' : null,
             suffixIcon: IconButton(
-              icon:
-                  Icon(_hidePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+              icon: Icon(_hidePassword
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined),
               onPressed: () {
                 setState(() {
                   _hidePassword = !_hidePassword;
@@ -126,6 +151,24 @@ class _SignUpButton extends StatelessWidget {
                 child: const Text('SIGN UP'),
               );
       },
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return TextButton(
+      key: const Key('loginForm_createAccount_flatButton'),
+      onPressed: () => Navigator.of(context).push<void>(LoginPage.route()),
+      child: Text(
+        'Log in',
+        style: TextStyle(
+            color: theme.primaryColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

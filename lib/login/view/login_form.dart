@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/login/login.dart';
 import 'package:denari_mobile/sign_up/sign_up.dart';
 import 'package:formz/formz.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -32,14 +33,29 @@ class LoginForm extends StatelessWidget {
                   'assets/denari_icon.png',
                   height: 120,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 50),
                 _EmailInput(),
                 const SizedBox(height: 16),
                 _PasswordInput(),
                 const SizedBox(height: 24),
                 _LoginButton(),
                 const SizedBox(height: 8),
-                _SignUpButton(),
+                Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'New to Denari?',
+                    style: GoogleFonts.manrope(
+                      textStyle: TextStyle(
+                        color: Colors.blueGrey[900],
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  _SignUpButton(),
+                ],
+              )
+                
               ],
             ),
           ),
@@ -140,8 +156,8 @@ class _SignUpButton extends StatelessWidget {
       key: const Key('loginForm_createAccount_flatButton'),
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
       child: Text(
-        'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
+        'Sign up',
+        style: TextStyle(color: theme.primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
