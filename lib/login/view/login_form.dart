@@ -12,7 +12,9 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionSuccess) {
+          Navigator.of(context).pop();
+        } else if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -22,25 +24,24 @@ class LoginForm extends StatelessWidget {
             );
         }
       },
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              
-              children: [
-                Image.asset(
-                  'assets/denari_icon.png',
-                  height: 120,
-                ),
-                const SizedBox(height: 50),
-                _EmailInput(),
-                const SizedBox(height: 16),
-                _PasswordInput(),
-                const SizedBox(height: 24),
-                _LoginButton(),
-                const SizedBox(height: 8),
-                Row(
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/denari_icon.png',
+                height: 120,
+              ),
+              const SizedBox(height: 50),
+              _EmailInput(),
+              const SizedBox(height: 16),
+              _PasswordInput(),
+              const SizedBox(height: 24),
+              _LoginButton(),
+              const SizedBox(height: 8),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -55,11 +56,10 @@ class LoginForm extends StatelessWidget {
                   _SignUpButton(),
                 ],
               )
-                
-              ],
-            ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
@@ -108,8 +108,9 @@ class _PasswordInputState extends State<_PasswordInput> {
             labelText: 'Password',
             errorText: state.password.invalid ? 'Invalid password' : null,
             suffixIcon: IconButton(
-              icon:
-                  Icon(_hidePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+              icon: Icon(_hidePassword
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined),
               onPressed: () {
                 setState(() {
                   _hidePassword = !_hidePassword;
@@ -136,7 +137,6 @@ class _LoginButton extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blueGrey[800],
                   minimumSize: const Size.fromHeight(50),
-
                 ),
                 onPressed: state.status.isValidated
                     ? () => context.read<LoginCubit>().logInWithCredentials()
@@ -157,7 +157,10 @@ class _SignUpButton extends StatelessWidget {
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
       child: Text(
         'Sign up',
-        style: TextStyle(color: theme.primaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: theme.primaryColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
       ),
     );
   }

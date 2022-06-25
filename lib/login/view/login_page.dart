@@ -6,7 +6,7 @@ import 'package:denari_mobile/login/login.dart';
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  static Page page() => const MaterialPage<void>(child: LoginPage());
+  // static Page page() => const MaterialPage<void>(child: LoginPage());
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const LoginPage());
