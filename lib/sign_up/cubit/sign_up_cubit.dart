@@ -19,7 +19,6 @@ class SignUpCubit extends Cubit<SignUpState> {
         status: Formz.validate([
           email,
           state.password,
-          state.confirmedPassword,
         ]),
       ),
     );
@@ -27,35 +26,12 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void passwordChanged(String value) {
     final password = Password.dirty(value);
-    final confirmedPassword = ConfirmedPassword.dirty(
-      password: password.value,
-      value: state.confirmedPassword.value,
-    );
     emit(
       state.copyWith(
         password: password,
-        confirmedPassword: confirmedPassword,
         status: Formz.validate([
           state.email,
           password,
-          confirmedPassword,
-        ]),
-      ),
-    );
-  }
-
-  void confirmedPasswordChanged(String value) {
-    final confirmedPassword = ConfirmedPassword.dirty(
-      password: state.password.value,
-      value: value,
-    );
-    emit(
-      state.copyWith(
-        confirmedPassword: confirmedPassword,
-        status: Formz.validate([
-          state.email,
-          state.password,
-          confirmedPassword,
         ]),
       ),
     );

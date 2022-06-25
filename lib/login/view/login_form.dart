@@ -69,7 +69,13 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
-class _PasswordInput extends StatelessWidget {
+class _PasswordInput extends StatefulWidget {
+  @override
+  State<_PasswordInput> createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<_PasswordInput> {
+  bool _hidePassword = true;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -79,12 +85,21 @@ class _PasswordInput extends StatelessWidget {
           key: const Key('loginForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
-          obscureText: true,
+          obscureText: _hidePassword,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: 'Password',
             errorText: state.password.invalid ? 'Invalid password' : null,
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_hidePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+              onPressed: () {
+                setState(() {
+                  _hidePassword = !_hidePassword;
+                });
+              },
+            ),
           ),
         );
       },
