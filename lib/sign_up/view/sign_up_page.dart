@@ -6,6 +6,8 @@ import 'package:denari_mobile/sign_up/sign_up.dart';
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
+  static Page page() => const MaterialPage<void>(child: SignUpPage());
+
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const SignUpPage());
   }
