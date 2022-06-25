@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   maximumValue: 4000,
                   pointColorMapper: (datum, index) => Colors.blueGrey[800],
                   innerRadius: '90%',
+                  animationDuration: 600
                 ),
               ],
             ),

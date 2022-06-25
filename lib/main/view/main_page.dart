@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:denari_mobile/app/app.dart';
 import 'package:denari_mobile/navigation/navigation.dart';
 import 'package:denari_mobile/screens/screens.dart';
 
@@ -23,8 +22,6 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final textTheme = Theme.of(context).textTheme;
-    // final user = context.select((AppBloc bloc) => bloc.state.user);
     return Scaffold(
         body: BlocBuilder<NavigationCubit, NavigationState>(
             builder: (context, state) {
@@ -65,8 +62,6 @@ class MainView extends StatelessWidget {
               selectedItemColor: Colors.blueGrey[800],
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              
-              
             );
           },
         ));
