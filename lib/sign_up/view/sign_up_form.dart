@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/sign_up/sign_up.dart';
 import 'package:formz/formz.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -20,17 +21,27 @@ class SignUpForm extends StatelessWidget {
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              'Create an account to continue',
+              style: GoogleFonts.manrope(
+                textStyle: TextStyle(
+                    color: Colors.blueGrey[900],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 32),
             _EmailInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             _PasswordInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             _ConfirmPasswordInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 24),
             _SignUpButton(),
           ],
         ),
@@ -50,9 +61,9 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
-            helperText: '',
-            errorText: state.email.invalid ? 'invalid email' : null,
+            border: const OutlineInputBorder(),
+            labelText: 'Email address',
+            errorText: state.email.invalid ? 'Invalid email' : null,
           ),
         );
       },
@@ -60,7 +71,13 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
-class _PasswordInput extends StatelessWidget {
+class _PasswordInput extends StatefulWidget {
+  @override
+  State<_PasswordInput> createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<_PasswordInput> {
+  bool _hidePassword = true;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
@@ -70,11 +87,20 @@ class _PasswordInput extends StatelessWidget {
           key: const Key('signUpForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<SignUpCubit>().passwordChanged(password),
-          obscureText: true,
+          obscureText: _hidePassword,
           decoration: InputDecoration(
-            labelText: 'password',
-            helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            border: const OutlineInputBorder(),
+            labelText: 'Password (8+ characters)',
+            errorText: state.password.invalid ? 'Invalid password' : null,
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_hidePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+              onPressed: () {
+                setState(() {
+                  _hidePassword = !_hidePassword;
+                });
+              },
+            ),
           ),
         );
       },
@@ -120,10 +146,8 @@ class _SignUpButton extends StatelessWidget {
             : ElevatedButton(
                 key: const Key('signUpForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  primary: Colors.orangeAccent,
+                  primary: Colors.blueGrey[800],
+                  minimumSize: const Size.fromHeight(50),
                 ),
                 onPressed: state.status.isValidated
                     ? () => context.read<SignUpCubit>().signUpFormSubmitted()
