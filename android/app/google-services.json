@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "738409808827",
+    "project_id": "denari-app",
+    "storage_bucket": "denari-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738409808827:android:dab7fac3da222708f13a9e",
+        "android_client_info": {
+          "package_name": "com.example.denari_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738409808827-1pp6n6l51scsi8nnrk7uhkd2qeevs956.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT9_i-uUWWF7Cm_aYkoesjcYW45cxwj98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738409808827-1pp6n6l51scsi8nnrk7uhkd2qeevs956.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "738409808827-1nkmf88k9ga4fqjp86rvqluimjllnoeh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.denariMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
