@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/login/login.dart';
-import 'package:denari_mobile/sign_up/sign_up.dart';
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,12 +34,22 @@ class LoginForm extends StatelessWidget {
                 height: 120,
               ),
               const SizedBox(height: 50),
+              Text(
+                'Log in to Denari',
+                style: GoogleFonts.manrope(
+                  textStyle: TextStyle(
+                      color: Colors.blueGrey[900],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 32),
               _EmailInput(),
               const SizedBox(height: 16),
               _PasswordInput(),
               const SizedBox(height: 24),
               _LoginButton(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -154,7 +163,7 @@ class _SignUpButton extends StatelessWidget {
     final theme = Theme.of(context);
     return TextButton(
       key: const Key('loginForm_createAccount_flatButton'),
-      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+      onPressed: () => Navigator.of(context).pop(),
       child: Text(
         'Sign up',
         style: TextStyle(
