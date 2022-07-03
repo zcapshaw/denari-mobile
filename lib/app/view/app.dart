@@ -3,6 +3,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/app/app.dart';
+import 'package:denari_mobile/theme.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -34,9 +35,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Denari',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+      theme: theme,
       // home: const HomeScreen(title: 'Denari Home Page'),
       home: FlowBuilder<AppStatus>(
         state: context.select((AppBloc bloc) => bloc.state.status),
