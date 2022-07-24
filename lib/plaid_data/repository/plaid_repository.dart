@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:plaid_flutter/plaid_flutter.dart';
 
-import 'package:denari_mobile/plaid_data/plaid_data.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:http/http.dart' as http;
 
 /// Exception thrown when API call fails.
@@ -16,11 +16,11 @@ class PlaidRepository {
   final http.Client _httpClient;
   late LinkTokenConfiguration _linkTokenConfiguration;
 
-  Future openPlaidLink() async {
+  Future openPlaidLink(User user) async {
     try {
       // Get the link token
-      final String linkToken = await _getLinkToken();
-      print(linkToken);
+      final String linkToken = await _getLinkToken(user.id);
+      // print(linkToken);
       // This will trigger the Plaid Link view for adding an Item/Login Creds
       _linkTokenConfiguration = LinkTokenConfiguration(
         token: linkToken,
@@ -36,14 +36,17 @@ class PlaidRepository {
   }
 
   // Returns a link token from Denari API
-  Future _getLinkToken() async {
+  Future _getLinkToken(String userId) async {
     final requestUrl = Uri.https(
       _baseUrl,
       '/plaid/link/create',
     );
 
     final linkResponse =
-        await _httpClient.post(requestUrl, body: {'user_id': 'test'});
+        await _httpClient.post(requestUrl, body: {'user_id': userId});
+    // print('user id is $userId');
+    // print('Response status: ${linkResponse.statusCode}');
+    // print('Response body: ${linkResponse.body}');
 
     if (linkResponse.statusCode != 200) {
       throw RequestFailure();

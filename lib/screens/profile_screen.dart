@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 onPressed: () =>
                     context.read<PlaidDataBloc>().add(SwitchToInitialState()),
-                child: const Text('Switch views'),
+                child: const Text('LINK ACCOUNTS WITH PLAID'),
               ),
             ],
           ),

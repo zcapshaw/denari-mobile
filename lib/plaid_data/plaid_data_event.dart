@@ -15,4 +15,11 @@ class PlaidDataLoaded extends PlaidDataEvent {}
 class SwitchToInitialState extends PlaidDataEvent {}
 
 //Event fired when user taps Connect With Plaid button in UI
-class GetLinkToken extends PlaidDataEvent {}
+class GetLinkToken extends PlaidDataEvent {
+  const GetLinkToken(this.user);
+
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:denari_mobile/plaid_data/repository/plaid_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 
 part 'plaid_data_event.dart';
 part 'plaid_data_state.dart';
@@ -25,7 +26,7 @@ class PlaidDataBloc extends Bloc<PlaidDataEvent, PlaidDataState> {
 
     // Handle user requesting to link an account via Plaid
     on<GetLinkToken>((event, emit) {
-      _plaidRepository.openPlaidLink();
+      _plaidRepository.openPlaidLink(event.user);
     });
   }
 
