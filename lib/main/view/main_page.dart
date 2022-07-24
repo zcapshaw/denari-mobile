@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/navigation/navigation.dart';
 import 'package:denari_mobile/screens/screens.dart';
 import 'package:denari_mobile/plaid_data/plaid_data.dart';
-import 'package:denari_mobile/screens/screens.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -12,15 +11,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<NavigationCubit>(
-          create: (_) => NavigationCubit(),
-        ),
-        BlocProvider<PlaidDataBloc>(
-          create: (_) => PlaidDataBloc(),
-        ),
-      ],
+    return BlocProvider<NavigationCubit>(
+      create: (_) => NavigationCubit(),
       child: const MainView(),
     );
   }

@@ -35,12 +35,22 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () =>
-                          context.read<PlaidDataBloc>().add(PlaidDataLoaded()),
+                          context.read<PlaidDataBloc>().add(GetLinkToken()),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blueGrey[800],
                         minimumSize: const Size.fromHeight(50),
                       ),
                       child: const Text('CONNECT WITH PLAID'),
+                    ),
+                    const SizedBox(height: 40),
+                    ElevatedButton(
+                      onPressed: () =>
+                          context.read<PlaidDataBloc>().add(PlaidDataLoaded()),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blueGrey[800],
+                        minimumSize: const Size.fromHeight(50),
+                      ),
+                      child: const Text('SWITCH STATES'),
                     ),
                   ],
                 ),

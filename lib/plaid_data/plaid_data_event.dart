@@ -10,3 +10,9 @@ abstract class PlaidDataEvent extends Equatable {
 class UserLoggedIn extends PlaidDataEvent {}
 
 class PlaidDataLoaded extends PlaidDataEvent {}
+
+//TODO: remove this test event
+class SwitchToInitialState extends PlaidDataEvent {}
+
+//Event fired when user taps Connect With Plaid button in UI
+class GetLinkToken extends PlaidDataEvent {}
