@@ -15,7 +15,14 @@ class PlaidDataLoadSuccess extends PlaidDataState {}
 class PlaidLinkLoading extends PlaidDataState {}
 
 /// emitted when user successfully links a new item
-class PlaidLinkSuccess extends PlaidDataState {}
+class PlaidLinkSuccess extends PlaidDataState {
+  const PlaidLinkSuccess(this.linkedItems);
+
+  final List<PlaidLinkedItem> linkedItems;
+
+  @override
+  List<Object> get props => [linkedItems];
+}
 
 /// emitted when user successfully links a new item
 class PlaidLinkFailure extends PlaidDataState {}

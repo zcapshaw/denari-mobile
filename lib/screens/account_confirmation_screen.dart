@@ -17,61 +17,85 @@ class AccountConfirmationScreen extends StatelessWidget {
 
     return BlocBuilder<PlaidDataBloc, PlaidDataState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(48.0),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Rock on 🎸',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      'Successfully added {n} accounts.',
-                      style: Theme.of(context).textTheme.bodyText1,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 40),
-                    const ListTile(
-                      leading: FaIcon(FontAwesomeIcons.landmark),
-                      title: Text('PNC SAVINGS'),
-                      subtitle: Text('********1234'),
-                    ),
-                    const SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        OutlinedButton(
-                          onPressed: () => context
-                              .read<PlaidDataBloc>()
-                              .add(PlaidDataLoaded()),
-                          child: const Text('I\'M DONE'),
+        if (state is PlaidLinkSuccess) {
+          final linkedItems = state.linkedItems;
+          final numberOfAccounts = state.linkedItems.length;
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(48.0),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Rock on 🎸',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 30),
+                      Text(
+                        'Successfully added $numberOfAccounts accounts.',
+                        style: Theme.of(context).textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+                      Column(
+                        children: List.generate(
+                          linkedItems.length,
+                          ((index) {
+                            return Column(
+                              children: [
+                                ListTile(
+                                  leading:
+                                      const FaIcon(FontAwesomeIcons.landmark),
+                                  title: Text(linkedItems.isEmpty
+                                      ? 'Error Occurred'
+                                      : linkedItems[index].institutionName),
+                                  subtitle: Text(linkedItems.isEmpty
+                                      ? 'Error Occurred'
+                                      : '********${linkedItems[index].accountMask}'),
+                                ),
+                                const Divider()
+                              ],
+                            );
+                          }),
                         ),
-                        const SizedBox(width: 20),
-                        ElevatedButton(
-                          onPressed: () => context
-                              .read<PlaidDataBloc>()
-                              .add(GetLinkToken(user)),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blueGrey[800],
-                            elevation: 0,
-                          ),
-                          child: const Text('ADD ANOTHER'),
+                      ),
+                      const SizedBox(height: 40),
+                      ElevatedButton(
+                        onPressed: () => context
+                            .read<PlaidDataBloc>()
+                            .add(GetLinkToken(user)),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey[800],
+                          elevation: 0,
+                          minimumSize: const Size.fromHeight(50),
                         ),
-                      ],
-                    ),
-                  ],
+                        child: const Text('ADD ANOTHER'),
+                      ),
+                      const SizedBox(height: 20),
+                      OutlinedButton(
+                        onPressed: () => context
+                            .read<PlaidDataBloc>()
+                            .add(PlaidDataLoaded()),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(50),
+                        ),
+                        child: const Text('I\'M DONE ADDING ACCOUNTS'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }

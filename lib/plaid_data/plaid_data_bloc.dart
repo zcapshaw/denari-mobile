@@ -1,10 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:denari_mobile/plaid_data/plaid_repository/models/plaid_linked_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:denari_mobile/plaid_data/plaid_repository/plaid_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:plaid_flutter/plaid_flutter.dart';
 import './plaid_repository/models/plaid_response.dart';
+import './plaid_repository/models/plaid_linked_item.dart';
 
 part 'plaid_data_event.dart';
 part 'plaid_data_state.dart';
@@ -18,7 +21,13 @@ class PlaidDataBloc extends Bloc<PlaidDataEvent, PlaidDataState> {
     on<PlaidSubscriptionRequested>((event, emit) async {
       await emit.forEach<PlaidResponse>(
         _plaidRepository.response,
-        onData: (res) => PlaidLinkSuccess(),
+        onData: (res) {
+          if (res.status == PlaidRequestStatus.succeeded) {
+            return PlaidLinkSuccess(res.items);
+          } else {
+            return PlaidDataInitial();
+          }
+        },
         onError: (obj, trace) => PlaidLinkFailure(),
       );
     });

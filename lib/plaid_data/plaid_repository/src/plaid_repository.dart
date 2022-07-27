@@ -42,17 +42,21 @@ class PlaidRepository extends PlaidDataStreamRepository {
     print("onSuccess: $publicToken, metadata: ${metadata.description()}");
     _sendPublicToken(publicToken);
 
-    List<LinkAccount> linkedAccounts = [];
-    metadata.accounts.map((e) => linkedAccounts.add(e));
+    List<PlaidLinkedItem> linkedAccounts = [];
+
+    for (var account in metadata.accounts) {
+      final item = PlaidLinkedItem(
+          institutionName: metadata.institution.name,
+          accountName: account.name,
+          accountMask: account.mask);
+
+      linkedAccounts.add(item);
+    }
+
     print('linked accounts: $linkedAccounts');
 
-    final linkedItems = PlaidLinkedItem(
-        institutionName: metadata.institution.name,
-        accountName: 'placeholder account name',
-        accountMask: '1234');
-
     final response = PlaidResponse(
-        status: PlaidRequestStatus.succeeded, items: [linkedItems]);
+        status: PlaidRequestStatus.succeeded, items: linkedAccounts);
 
     // Add a success event to the Stream to notify the Plaid Data Bloc
     addToStream(response);
