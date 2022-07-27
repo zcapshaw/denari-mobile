@@ -16,6 +16,7 @@ Future<void> main() {
       final authenticationRepository = AuthenticationRepository();
       final plaidRepository = PlaidRepository();
       await authenticationRepository.user.first;
+
       runApp(App(
         authenticationRepository: authenticationRepository,
         plaidRepository: plaidRepository,

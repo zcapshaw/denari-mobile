@@ -9,8 +9,10 @@ abstract class PlaidDataState extends Equatable {
 
 class PlaidDataInitial extends PlaidDataState {}
 
-class PlaidDataLoading extends PlaidDataState {}
-
 class PlaidDataLoadSuccess extends PlaidDataState {}
 
-class PlaidDataLoadFailure extends PlaidDataState {}
+// emitted whil the Plaid Link is opening until it closes
+class PlaidLinkLoading extends PlaidDataState {}
+
+/// emitted when user successfully links a new item
+class PlaidLinkSuccess extends PlaidDataState {}

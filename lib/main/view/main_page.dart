@@ -25,8 +25,10 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PlaidDataBloc, PlaidDataState>(
       builder: (context, state) {
-        if (state is PlaidDataInitial) {
+        if (state is PlaidDataInitial || state is PlaidLinkLoading) {
           return const WelcomeScreen();
+        } else if (state is PlaidLinkSuccess) {
+          return const AccountConfirmationScreen();
         } else if (state is PlaidDataLoadSuccess) {
           return const HomeView();
         }
