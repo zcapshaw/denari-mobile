@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/app/app.dart';
 import 'package:denari_mobile/theme.dart';
-
-import '../../plaid_data/repository/plaid_repository.dart';
+import 'package:denari_mobile/plaid_data/plaid_repository/plaid_repository.dart';
 
 class App extends StatelessWidget {
   const App({

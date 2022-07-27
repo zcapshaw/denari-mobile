@@ -3,8 +3,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:denari_mobile/plaid_data/repository/plaid_repository.dart';
+import 'package:denari_mobile/plaid_data/plaid_repository/plaid_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import './plaid_repository/models/plaid_response.dart';
 
 part 'plaid_data_event.dart';
 part 'plaid_data_state.dart';
@@ -46,11 +47,13 @@ class PlaidDataBloc extends Bloc<PlaidDataEvent, PlaidDataState> {
   final PlaidRepository _plaidRepository;
   late final StreamSubscription _subscription;
 
+  // Listen for events from the Plaid SDK and emit states accordingly
   void _subscribe() {
     _subscription = _plaidRepository.response.listen((event) {
       print('stream event detected: $event');
 
-      // If user exits the plaid flow without linking an
+      /// If user exits the plaid flow without linking an account
+      /// Then return them to the Connect With Plaid screen
       if (event.status == PlaidRequestStatus.exited) {
         emit(PlaidDataInitial());
       }

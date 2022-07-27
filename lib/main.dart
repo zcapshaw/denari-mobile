@@ -1,6 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:denari_mobile/plaid_data/repository/plaid_repository.dart';
+import 'package:denari_mobile/plaid_data/plaid_repository/plaid_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:denari_mobile/app/app.dart';
