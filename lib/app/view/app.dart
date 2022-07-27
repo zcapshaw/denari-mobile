@@ -33,7 +33,7 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => PlaidDataBloc(
               plaidRepository: _plaidRepository,
-            ),
+            )..add(PlaidSubscriptionRequested()),
           ),
         ],
         child: const AppView(),

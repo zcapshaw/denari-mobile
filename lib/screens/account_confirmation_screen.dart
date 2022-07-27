@@ -1,3 +1,4 @@
+import 'package:denari_mobile/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/plaid_data/plaid_data.dart';
@@ -11,6 +12,9 @@ class AccountConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // User ID will be passed to API for Plaid Link token
+    final user = context.select((AppBloc bloc) => bloc.state.user);
+
     return BlocBuilder<PlaidDataBloc, PlaidDataState>(
       builder: (context, state) {
         return Scaffold(
@@ -53,7 +57,7 @@ class AccountConfirmationScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () => context
                               .read<PlaidDataBloc>()
-                              .add(PlaidDataLoaded()),
+                              .add(GetLinkToken(user)),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueGrey[800],
                             elevation: 0,

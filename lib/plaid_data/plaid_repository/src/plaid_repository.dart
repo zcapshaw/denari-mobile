@@ -16,7 +16,7 @@ abstract class PlaidDataStreamRepository {
   final _controller = StreamController<PlaidResponse>();
 
   /// Provides a [Stream] of Plaid Responses
-  Stream<PlaidResponse> get response => _controller.stream.asBroadcastStream();
+  Stream<PlaidResponse> get response => _controller.stream;
 
   void addToStream(PlaidResponse response) => _controller.sink.add(response);
 }
@@ -41,6 +41,21 @@ class PlaidRepository extends PlaidDataStreamRepository {
   void _onSuccessCallback(String publicToken, LinkSuccessMetadata metadata) {
     print("onSuccess: $publicToken, metadata: ${metadata.description()}");
     _sendPublicToken(publicToken);
+
+    List<LinkAccount> linkedAccounts = [];
+    metadata.accounts.map((e) => linkedAccounts.add(e));
+    print('linked accounts: $linkedAccounts');
+
+    final linkedItems = PlaidLinkedItem(
+        institutionName: metadata.institution.name,
+        accountName: 'placeholder account name',
+        accountMask: '1234');
+
+    final response = PlaidResponse(
+        status: PlaidRequestStatus.succeeded, items: [linkedItems]);
+
+    // Add a success event to the Stream to notify the Plaid Data Bloc
+    addToStream(response);
   }
 
   void _onEventCallback(String event, LinkEventMetadata metadata) {

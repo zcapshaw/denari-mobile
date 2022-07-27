@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,51 +11,37 @@ part 'plaid_data_state.dart';
 
 class PlaidDataBloc extends Bloc<PlaidDataEvent, PlaidDataState> {
   PlaidDataBloc({required PlaidRepository plaidRepository})
-      // initialize plaidRepository
       : _plaidRepository = plaidRepository,
-        //define initial state to emit
         super(PlaidDataInitial()) {
-    _subscribe();
+    /// Open a subscription to the Plaid Repo event stream
+    /// Emit states in response to Plaid Linking events
+    on<PlaidSubscriptionRequested>((event, emit) async {
+      await emit.forEach<PlaidResponse>(
+        _plaidRepository.response,
+        onData: (res) => PlaidLinkSuccess(),
+        onError: (obj, trace) => PlaidLinkFailure(),
+      );
+    });
 
-    /// EVENT HANDLERS
-    // Used for testing
     on<PlaidDataLoaded>((event, emit) {
       emit(PlaidDataLoadSuccess());
     });
 
-    // TODO: Remove this event
     on<SwitchToInitialState>((event, emit) {
       emit(PlaidDataInitial());
     });
 
     // Handle user requesting to link an account via Plaid
-    on<GetLinkToken>((event, emit) async {
-      try {
-        // switch the UI to a loading spinner while the Plaid Link SDK fires up
+    on<GetLinkToken>(
+      (event, emit) async {
+        // Show a loading spinner while Plaid SDK is open
         emit(PlaidLinkLoading());
 
-        // Request to open a Plaid Link
+        // Open the Plaid Link UI
         await _plaidRepository.openPlaidLink(event.user);
-      } catch (err) {
-        print(err);
-        throw Exception('Open Plaid Link failed: $err');
-      }
-    });
+      },
+    );
   }
 
   final PlaidRepository _plaidRepository;
-  late final StreamSubscription _subscription;
-
-  // Listen for events from the Plaid SDK and emit states accordingly
-  void _subscribe() {
-    _subscription = _plaidRepository.response.listen((event) {
-      print('stream event detected: $event');
-
-      /// If user exits the plaid flow without linking an account
-      /// Then return them to the Connect With Plaid screen
-      if (event.status == PlaidRequestStatus.exited) {
-        emit(PlaidDataInitial());
-      }
-    });
-  }
 }

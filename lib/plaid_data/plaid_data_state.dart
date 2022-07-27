@@ -16,3 +16,6 @@ class PlaidLinkLoading extends PlaidDataState {}
 
 /// emitted when user successfully links a new item
 class PlaidLinkSuccess extends PlaidDataState {}
+
+/// emitted when user successfully links a new item
+class PlaidLinkFailure extends PlaidDataState {}
