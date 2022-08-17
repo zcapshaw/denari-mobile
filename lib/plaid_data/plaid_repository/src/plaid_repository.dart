@@ -29,11 +29,14 @@ class PlaidRepository extends PlaidDataStreamRepository {
   static const _baseUrl = 'api.denari.app';
   final http.Client _httpClient;
   late LinkTokenConfiguration _linkTokenConfiguration;
+  late User _user;
 
   // Plaid Link helper functions
   void _sendPublicToken(String token) async {
     var url = Uri.parse('https://api.denari.app/plaid/link/exchange');
-    var response = await http.post(url, body: {'public_token': token});
+    print('user id is: ${_user.id}');
+    var response = await http
+        .post(url, body: {'public_token': token, 'user_id': _user.id});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
   }
@@ -87,6 +90,7 @@ class PlaidRepository extends PlaidDataStreamRepository {
       // print(linkToken);
 
       // This will trigger the Plaid Link view for adding an Item/Login Creds
+      _user = user;
       _linkTokenConfiguration = LinkTokenConfiguration(
         token: linkToken,
       );
