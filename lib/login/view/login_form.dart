@@ -25,7 +25,7 @@ class LoginForm extends StatelessWidget {
       },
       child: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -47,7 +47,8 @@ class LoginForm extends StatelessWidget {
               _EmailInput(),
               const SizedBox(height: 16),
               _PasswordInput(),
-              const SizedBox(height: 24),
+              _ForgotPasswordButton(),
+              const SizedBox(height: 8),
               _LoginButton(),
               const SizedBox(height: 24),
               Row(
@@ -58,7 +59,7 @@ class LoginForm extends StatelessWidget {
                     style: GoogleFonts.manrope(
                       textStyle: TextStyle(
                         color: Colors.blueGrey[900],
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -168,9 +169,31 @@ class _SignUpButton extends StatelessWidget {
         'Sign up',
         style: TextStyle(
             color: theme.primaryColor,
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold),
       ),
+    );
+  }
+}
+
+class _ForgotPasswordButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            'Forgot Password?',
+            style: TextStyle(
+                color: theme.primaryColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
     );
   }
 }
