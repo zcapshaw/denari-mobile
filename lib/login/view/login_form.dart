@@ -1,3 +1,4 @@
+import 'package:denari_mobile/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/login/login.dart';
@@ -184,7 +185,8 @@ class _ForgotPasswordButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () =>
+              Navigator.of(context).push<void>(ResetPasswordScreen.route()),
           child: Text(
             'Forgot Password?',
             style: TextStyle(
