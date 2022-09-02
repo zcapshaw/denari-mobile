@@ -29,9 +29,9 @@ class SignUpForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                  'assets/denari_icon.png',
-                  height: 120,
-                ),
+                'assets/denari_icon.png',
+                height: 120,
+              ),
               const SizedBox(height: 50),
               Text(
                 'Create an account to continue',
@@ -57,7 +57,7 @@ class SignUpForm extends StatelessWidget {
                     style: GoogleFonts.manrope(
                       textStyle: TextStyle(
                         color: Colors.blueGrey[900],
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -166,7 +166,7 @@ class _LoginButton extends StatelessWidget {
         'Log in',
         style: TextStyle(
             color: theme.primaryColor,
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold),
       ),
     );
