@@ -52,4 +52,15 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
+  Future<void> sendPasswordResetEmail() async {
+    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    try {
+      await _authenticationRepository.sendPasswordResetEmail(
+        email: state.email.value,
+      );
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+    } catch (_) {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
+    }
+  }
 }

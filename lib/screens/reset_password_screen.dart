@@ -1,5 +1,4 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:denari_mobile/app/view/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:denari_mobile/login/login.dart';
@@ -54,6 +53,14 @@ class ResetPasswordForm extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pop();
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Text(
+                    'Success! Check your email for password reset instructions.'),
+              ),
+            );
         } else if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -93,7 +100,7 @@ class ResetPasswordForm extends StatelessWidget {
               const SizedBox(height: 32),
               _EmailInput(),
               const SizedBox(height: 16),
-              _LoginButton(),
+              _ResetButton(),
               const SizedBox(height: 24),
             ],
           ),
@@ -124,23 +131,22 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class _ResetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? const Center(child: CircularProgressIndicator())
             : ElevatedButton(
                 key: const Key('ResetPasswordForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blueGrey[800],
                   minimumSize: const Size.fromHeight(50),
                 ),
-                onPressed: state.status.isValidated
-                    ? () => context.read<LoginCubit>().logInWithCredentials()
-                    : null,
+                onPressed: () =>
+                    context.read<LoginCubit>().sendPasswordResetEmail(),
                 child: const Text('RESET PASSWORD'),
               );
       },
